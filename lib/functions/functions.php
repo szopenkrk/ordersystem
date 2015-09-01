@@ -292,7 +292,7 @@ function addUser($user, $pass, $email, $manager, $site_url) {
 
 	$reg_date = date("l, M j, Y, g:i a");
 
-	$sql = "INSERT INTO users (username,password,email,active,level_access,act_key,reg_date,manager) VALUES ('" . $user . "','" . $pass . "','" . $email . "','" . $manager . "',0,2,'" . $activation_key . "','" . $reg_date . "')";
+	$sql = "INSERT INTO users (username,password,email,active,level_access,act_key,reg_date,manager) VALUES ('" . $user . "','" . $pass . "','" . $email . "','" . $manager . "',1,2,'','" . $reg_date . "')";
 	$res = mysql_query($sql) or die(mysql_error());
 	if ($res) {
 		//build email to be sent
