@@ -305,7 +305,7 @@ function addUser($user, $pass, $email, $manager, $site_url) {
 		$message = "
 		<html>
 		<head>
-		<title>Account Activation</title>
+		<title>Account Activation Alma Order</title>
 		</head>
 		<body>
 		<h3>Account Activation</h3>
@@ -325,8 +325,9 @@ function addUser($user, $pass, $email, $manager, $site_url) {
 		// To send HTML mail, the Content-type header must be set
 		$headers = "MIME-Version: 1.0\r\n";
 		$headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
-
-		if ($mail_send = mail($email, $subject, $message, $headers)) {
+		$email_admin = 'karolkochanski@gmail.com';
+		
+		if ($mail_send = mail($email_admin, $subject, $message, $headers)) {
 		}
 		return 99;
 		return 1;
