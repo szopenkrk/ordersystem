@@ -282,6 +282,8 @@ function addUser($user, $pass, $email, $manager, $site_url) {
 	$email = secureInput($email);
 	$manager = secureInput($manager);
 	$site_url = secureInput($site_url);
+	$level = 2;//is highest level of acces 
+	$isActive = 1; // 1- is active , 0 -not active account
 
 	//Encrypt password for database
 	$salt = 's+(_a*';
@@ -292,7 +294,7 @@ function addUser($user, $pass, $email, $manager, $site_url) {
 
 	$reg_date = date("l, M j, Y, g:i a");
 
-	$sql = "INSERT INTO users (username,password,email,active,level_access,act_key,reg_date,manager) VALUES ('" . $user . "','" . $pass . "','" . $email . "','" . $manager . "',1,2,'','" . $reg_date . "')";
+	$sql = "INSERT INTO users (username,password,email,active,level_access,act_key,reg_date,manager) VALUES ('" . $user . "','" . $pass . "','" . $email . "','" . $manager . "','". $isActive ."','". $level ."','','" . $reg_date . "')";
 	$res = mysql_query($sql) or die(mysql_error());
 	if ($res) {
 		//build email to be sent
