@@ -57,9 +57,9 @@ function addOrder($content, $order_user, $date_m, $manager, $user_mail) {
 	/*Date to mailing */
 	
 	//################## MANAGER MAIL ####################################
-	//$manager = 'bkasperczyk@almamarket.pl';
+	$manager = 'bkasperczyk@almamarket.pl';
 	//$manager = 'grzegorz.adamczyk@hcseurope.pl';
-	$manager = 'karolkochanski@gmail.com';
+	//$manager = 'karolkochanski@gmail.com';
 	//$mail_to = $_POST['mail'];
 	$email_subject = "ZAMOWIENIE HCS nr: ";
 	$link = "ordersystem/users/show_order.php";
@@ -91,7 +91,7 @@ function addOrder($content, $order_user, $date_m, $manager, $user_mail) {
 
 			$headers = 'E mail z systemu zamówień HCS';
 			$bodytext = 'Link do zatwierdzenia zamówienia http://hcs.mkgstudio.pl/' . $link . '/' . $kod . '/  
-			Zamówienie z maila :'. $user_mail1 .'
+			Zamówienie z maila :'. $user_mail1 . '/
 			Zamówienie dostępne pod adresem http://hcs.mkgstudio.pl/ordersystem/users/uploads/'.$N2name;
 						
 			
@@ -230,9 +230,9 @@ function addOrder($content, $order_user, $date_m, $manager, $user_mail) {
 
 
 							//################## MANAGER MAIL ####################################
-							//$manager = 'bkasperczyk@almamarket.pl';
+							$manager = 'bkasperczyk@almamarket.pl';
 							//$manager = 'grzegorz.adamczyk@hcseurope.pl';
-							$manager = 'karolkochanski@gmail.com';
+							//$manager = 'karolkochanski@gmail.com';
 							$user_mail = $getuser[0]['email'];
 							
 							if (!$conn) {

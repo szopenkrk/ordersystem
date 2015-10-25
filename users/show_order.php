@@ -48,22 +48,24 @@ $getuser = getUserRecords($_SESSION['user_id']);
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
 						<li>
-							<a href="index.php">Home</a>
+							<a href="http://hcs.mkgstudio.pl/ordersystem/users/index.php">Home</a>
 						</li>
 						<li>
-							<a href="login.php">Log in</a>
+							<a href="http://hcs.mkgstudio.pl/ordersystem/users/order.php" >Zamówienie</a>
+						</li>
+						
+						<li>
+							<a href="http://hcs.mkgstudio.pl/ordersystem/edit_profile.php" >Edit Profile</a>
 						</li>
 						<li>
-							<a href="register.php">Register</a>
+							<a href="http://hcs.mkgstudio.pl/ordersystem/users/order_list.php" >Lista zamówień</a>
+						</li>
+						<li><a href="http://hcs.mkgstudio.pl/ordersystem/users/files.php" >Lista Plików</a></li>
+						<li>
+							<a href="http://hcs.mkgstudio.pl/ordersystem/users/contact_us.php">Kontakt</a>
 						</li>
 						<li>
-							<a href="pass_reset.php">Odzyskanie Hasla</a>
-						</li>
-						<li>
-							<a href="contact_us.php">Kontakt</a>
-						</li>
-						<li>
-							<a href="log_off.php?action=logoff">Wyloguj się</a>
+							<a href="http://hcs.mkgstudio.pl/ordersystem/users/log_off.php">Wyloguj się</a>
 						</li>
 					</ul>
 				</div>
@@ -82,11 +84,17 @@ $getuser = getUserRecords($_SESSION['user_id']);
 						
 					</p>
 					<div class="list-group">
-						 <a href="index.php" class="list-group-item active">Home</a>
-						<a href="login.php" class="list-group-item">Log in</a>
-						<a href="register.php" class="list-group-item">Register</a>
-						<a href="pass_reset.php" class="list-group-item">Odzyskanie Hasla</a>
-						<a href="contact_us.php" class="list-group-item">Kontakt</a>
+						 <a href="http://hcs.mkgstudio.pl/ordersystem/users/index.php" class="list-group-item active">Home</a>
+						<a href="http://hcs.mkgstudio.pl/ordersystem/users/order.php" class="list-group-item">Zamówienie</a>
+						<!-- <?
+						if (!empty($getuser[0]['thumb_path'])) {echo "<a href='http://hcs.mkgstudio.pl/ordersystem/users/manage_photo.php' class='list-group-item' >Manage My Photo</a>  ";
+						} else {echo "<a href='upload_photo.php' class='list-group-item'>Upload Photo</a>  ";
+						}
+						?> -->
+						<a href="http://hcs.mkgstudio.pl/ordersystem/users/order_list.php" class="list-group-item">Lista zamówień</a>
+						<a href="http://hcs.mkgstudio.pl/ordersystem/users/change_pass.php" class="list-group-item">Zmień Hasło</a>
+						<a href="http://hcs.mkgstudio.pl/ordersystem/users/edit_profile.php" class="list-group-item">Edytuj profil</a>
+						<a href="http://hcs.mkgstudio.pl/ordersystem/users/log_off.php">Wyloguj się</a>
 						
 					</div>
 				</div>
@@ -146,13 +154,24 @@ $getuser = getUserRecords($_SESSION['user_id']);
 							$u2 = $row['order_user'];
 							
 							$get2value = mysql_query("SELECT * FROM users WHERE username='$u2'", $connect);
+						
 							$row2 = mysql_fetch_array($get2value);
 							
 							$usermail = $row2['email'];
+
+							$file_changed = $row['filechange'];
 							
 							echo "<br />";
 							echo "ID zamówienia : " . $row['id'] . "<br/>";
 							echo "Link do zamówienia <a href='http://hcs.mkgstudio.pl/ordersystem/users/uploads/".$row['file'] . "'/>LINK</a><br/>";
+							if($file_changed){
+								echo"<br />";
+								echo "<b>Zamówienie wraz z modyfikacjami <a href='".$row['filechange'] . "'/>LINK</a><br/></b>";
+								echo"<br />";
+
+							}
+
+
 							echo "Uwagi do zamówienia zamówienia : " . $row['content'] . "<br/>";
 							echo "Zamawiający : " . $row['order_user'] . "<br/>";
 							echo "Data zamówienia : " . $row['date_m'] . "<br/>";
@@ -167,8 +186,9 @@ $getuser = getUserRecords($_SESSION['user_id']);
 							<?php if(!$row['status']){
 								echo'
 							<form action="" method="post" enctype="multipart/form-data">
-							
+								<b>Dodaj modyfikacje zamówienia :</b>
 								<input type="file" name="fileToUpload" id="fileToUpload"><br /><br />
+								
 								<input type="submit" name="akceptacja" value="akceptacja"  />
 								<input type="submit" name="odrzucenie" value="odrzucenie"  />
 								
@@ -186,7 +206,7 @@ $getuser = getUserRecords($_SESSION['user_id']);
 
 							}
 							
-//#################### END ZMIANA STATUSU ZAMÓWIENIA ###############################################/
+							//#################### END ZMIANA STATUSU ZAMÓWIENIA ###############################################/
 
 
 
@@ -196,7 +216,7 @@ $getuser = getUserRecords($_SESSION['user_id']);
 								$target_path = "uploads/{$N2name}";
 
 
-							$target_dir = "uploadchange/";
+								$target_dir = "uploadchange/";
 								$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 								$uploadOk = 1;
 								$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
@@ -229,27 +249,31 @@ $getuser = getUserRecords($_SESSION['user_id']);
 							if ($_POST['akceptacja'] and $_SERVER['REQUEST_METHOD'] == "POST") {
 										
 									if ($_FILES["fileToUpload"]["size"] > 500000) {
-									    echo "Sorry, your file is too large.";
+									    echo "Plik jest za duży.";
 									    $uploadOk = 0;
 									}
 									
 								if ($uploadOk == 0) {
-								    echo "Sorry, your file was not uploaded.";
+								    // echo "Sorry, your file was not uploaded.";
 								// if everything is ok, try to upload file
 								} else {
 									$Nname = uniqid();
 								$N2name = "{$Nname}.xls";
 								$target_path = "uploads/{$N2name}";
 								    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-								        echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
+								        echo "Plik ". basename( $_FILES["fileToUpload"]["name"]). " został dodany poprawnie.";
 								    } else {
-								        echo "Sorry, there was an error uploading your file.";
+								        echo "Przepraszamy wystąpił problem podczas dodawania pliku.";
 								    }
 								}
 								$uploadfile = $_FILES["fileToUpload"]["name"];
 								
-								$zam = 'http://hcs.mkgstudio.pl/ordersystem/users/uploadchange/'.$uploadfile;
-						
+								if($uploadfile){
+									$zam = 'http://hcs.mkgstudio.pl/ordersystem/users/uploadchange/'.$uploadfile;
+								}else{
+									$zam = '';
+								}
+
 								mysql_select_db("$database", $connect);
 								$update = "UPDATE zamownienie SET status='akceptacja', visibility='none', filechange='$zam'  WHERE token='$u1'";
 
@@ -264,16 +288,16 @@ $getuser = getUserRecords($_SESSION['user_id']);
 							
 							$uploadfile = $_FILES["fileToUpload"]["name"];
 							$email_subject = "Potwierdzenie ## Zamówienie z systemu HCS - ZAAKCEPTOWANE";
-							$email_subject2 = "HURTOWANIA Zamówienie z systemu HCS - ZAAKCEPTOWANE";
-							$email_subject3 = "Potwierdzenie ## Zamówienie z systemu HCS - ODRZUCONE";
+							
+							
 							$zawartość = "Zamówienie z systemu HCS - ZAAKCEPTOWANE  \r\n Treść zamówienia    :" . $row['content'] . " \r\nZamówienie pochodzi od " . $row['order_user']."\r\n E-mail zamawiajacego ". $row['user_mail']."
-							\r\nZamówienie dostępne pod adresem http://hcs.mkgstudio.pl/ordersystem/users/uploads/".$row['file']." 
-							\r\n ----------------------------------------------------------------------------------------------------------------------------------------------------------
-							\r\nZamówienie może zawierać zmiany jeźli tak to plik zmian:".$zam;
-							$zaw = "Zamówienie z systemu HCS - ODRZUCONE  \r\n Dodatkowa treść zamówienia    :" . $row['content'] . " 
-							\r\nZamówienie pochodzi od " . $row['order_user']."\r\n E-mail zamawiajacego ". $row['user_mail']."
-							\r\nZamówienie dostępne pod adresem http://hcs.mkgstudio.pl/ordersystem/users/uploads/".$uploadfile."   ";
-								$headers = "Zamówienie z systemu HCS - ZAAKCEPTOWANE PRZEZ MANAGERA";
+							\r\nZamówienie dostępne pod adresem http://hcs.mkgstudio.pl/ordersystem/users/uploads/".$row['file']." ";
+							
+							if($uploadfile){
+								$zawartość .="\r\nZamówienie może zawierać zmiany jeźli tak to plik zmian: http://hcs.mkgstudio.pl/ordersystem/users/uploadchange/" . $uploadfile ." ";
+							}	
+
+							$headers = "Zamówienie z systemu HCS - ZAAKCEPTOWANE PRZEZ MANAGERA";
 
 								//######################## MAIL DO SKLEPU ##########################################
 								@mail($usermail, $email_subject, $zawartość, $headers);
@@ -284,9 +308,38 @@ $getuser = getUserRecords($_SESSION['user_id']);
 								 header("refresh: 3;");
 
 							}
+
+
 							//##########################################################################################################
 
 							if ($_POST['odrzucenie'] and $_SERVER['REQUEST_METHOD'] == "POST") {
+
+								if ($_FILES["fileToUpload"]["size"] > 500000) {
+									    echo "Plik jest za duży.";
+									    $uploadOk = 0;
+									}
+									
+								if ($uploadOk == 0) {
+								    // echo "Plik nie został dodany.";
+								// if everything is ok, try to upload file
+								} else {
+									$Nname = uniqid();
+								$N2name = "{$Nname}.xls";
+								$target_path = "uploads/{$N2name}";
+								    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+								        echo "Plik ". basename( $_FILES["fileToUpload"]["name"]). " został dodany poprawnie.";
+								    } else {
+								        
+								    }
+								}
+								$uploadfile = $_FILES["fileToUpload"]["name"];
+								
+								if($uploadfile){
+									$zam = 'http://hcs.mkgstudio.pl/ordersystem/users/uploadchange/'.$uploadfile;
+								}else{
+									$zam = '';
+								}
+
 
 
 								mysql_select_db("$database", $connect);
@@ -294,6 +347,26 @@ $getuser = getUserRecords($_SESSION['user_id']);
 								
 								$res = mysql_query($update) or die(mysql_error());
 								
+
+								$uploadfile = $_FILES["fileToUpload"]["name"];
+
+								$hcs = 'grzegorz.adamczyk@hcseurope.pl';
+								$hcs2 = 'magdalena.baginska@hcseurope.pl';
+								//$hcs = 'karolkochanski@gmail.com';
+						
+							$email_subject3 = "Potwierdzenie ## Zamówienie z systemu HCS - ODRZUCONE";
+
+			$headers = "Zamówienie z systemu HCS - ODRZUCONE PRZEZ MANAGERA";
+			
+			$zaw = "Zamówienie z systemu HCS - ODRZUCONE  \r\n Dodatkowa treść zamówienia    :" . $row['content'] . " 
+			\r\nZamówienie pochodzi od " . $row['order_user']."\r\n E-mail zamawiajacego ". $row['user_mail']."
+			\r\nZamówienie dostępne pod adresem http://hcs.mkgstudio.pl/ordersystem/users/uploads/".$uploadfile." ";  
+			if($uploadfile){
+				$zawartość .="\r\nZamówienie może zawierać zmiany jeźli tak to plik zmian: http://hcs.mkgstudio.pl/ordersystem/users/uploadchange/" . $uploadfile ." ";
+			}	
+			
+
+
 								@mail($usermail, $email_subject3, $zaw, $headers);
  									header("refresh: 3;");
 							}

@@ -155,8 +155,7 @@ $getuser = getUserRecords($_SESSION['user_id']);
 								{
 								    echo "<tr>";
 								
-								    // $row is array... foreach( .. ) puts every element
-								    // of $row to $cell variable
+								 
 								    foreach($row as $cell)
 								        echo "<td>$cell</td>";
 										
@@ -219,7 +218,8 @@ $getuser = getUserRecords($_SESSION['user_id']);
 				var txt = h3tag.text();
 				h3tag.text(''); //Remove default text
 				$("<a />", {
-				   "href" : "http://hcs.mkgstudio.pl/ordersystem/users/uploadchange/" + txt, //grab the link from somewhere
+
+				   "href" : txt, //grab the link from somewhere
 				   "text" : txt
 				}).appendTo(h3tag);
 			});
