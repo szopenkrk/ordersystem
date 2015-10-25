@@ -1,8 +1,8 @@
 <?PHP
 $localhost = 'localhost'; //name of server. Usually localhost
-$database = 'c22ordersystem'; //database name.
-$username = 'c22admin_user'; //database username.
-$password = '2edebqcRHFFD_'; //database password.
+$database = ''; //database name.
+$username = ''; //database username.
+$password = ''; //database password.
 
 // connect to db  
 $conn = mysql_connect($localhost, $username, $password) or die('Error connecting to mysql');   
