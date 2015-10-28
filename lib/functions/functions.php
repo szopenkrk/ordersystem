@@ -282,8 +282,6 @@ function addUser($user, $pass, $email, $manager, $site_url) {
 	$email = secureInput($email);
 	$manager = secureInput($manager);
 	$site_url = secureInput($site_url);
-	$level = 2;//is highest level of acces 
-	$isActive = 1; // 1- is active , 0 -not active account
 
 	//Encrypt password for database
 	$salt = 's+(_a*';
@@ -294,7 +292,7 @@ function addUser($user, $pass, $email, $manager, $site_url) {
 
 	$reg_date = date("l, M j, Y, g:i a");
 
-	$sql = "INSERT INTO users (username,password,email,active,level_access,act_key,reg_date,manager) VALUES ('" . $user . "','" . $pass . "','" . $email . "','" . $manager . "','". $isActive ."','". $level ."','','" . $reg_date . "')";
+	$sql = "INSERT INTO users (username,password,email,active,level_access,act_key,reg_date,manager) VALUES ('" . $user . "','" . $pass . "','" . $email . "','" . $manager . "',0,2,'" . $activation_key . "','" . $reg_date . "')";
 	$res = mysql_query($sql) or die(mysql_error());
 	if ($res) {
 		//build email to be sent
@@ -305,7 +303,7 @@ function addUser($user, $pass, $email, $manager, $site_url) {
 		$message = "
 		<html>
 		<head>
-		<title>Account Activation Alma Order</title>
+		<title>Account Activation</title>
 		</head>
 		<body>
 		<h3>Account Activation</h3>
@@ -325,9 +323,8 @@ function addUser($user, $pass, $email, $manager, $site_url) {
 		// To send HTML mail, the Content-type header must be set
 		$headers = "MIME-Version: 1.0\r\n";
 		$headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
-		$email_admin = 'karolkochanski@gmail.com';
-		
-		if ($mail_send = mail($email_admin, $subject, $message, $headers)) {
+
+		if ($mail_send = mail($email, $subject, $message, $headers)) {
 		}
 		return 99;
 		return 1;

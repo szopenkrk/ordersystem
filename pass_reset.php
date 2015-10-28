@@ -50,7 +50,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="#">HCS</a>
+					<a class="navbar-brand" href="http://hcs.mkgstudio.pl/ordersystem">HCS</a>
 				</div>
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -61,9 +61,7 @@
 						<li>
 							<a href="login.php">Log in</a>
 						</li>
-						<li>
-							<a href="register.php">Register</a>
-						</li>
+						
 						<li>
 							<a href="pass_reset.php">Odzyskanie Hasla</a>
 						</li>
@@ -90,8 +88,6 @@
 					<div class="list-group">
 						<a href="index.php" class="list-group-item active">Home</a>
 						<a href="login.php" class="list-group-item">Log in</a>
-						<a href="register.php" class="list-group-item">Register</a>
-						<a href="pass_reset.php" class="list-group-item">Odzyskanie Hasla</a>
 						<a href="contact_us.php" class="list-group-item">Kontakt</a>
 						
 					</div>
@@ -100,7 +96,7 @@
 				<div class="col-md-9">
 
 					<div class="thumbnail">
-						<img class="img-responsive" src="http://placehold.it/800x300" alt="">
+						 <img class="img-responsive" src="./images/800x300.jpg" alt="">
 						<div class="caption-full">
 
 							<p>

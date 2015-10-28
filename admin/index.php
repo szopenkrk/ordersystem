@@ -14,7 +14,7 @@ $getuser = getUserRecords($_SESSION['user_id']);
 </head>
 
 <body>
-	<div align="right"><a href="index.php">Home</a> | <a href="../users/order.php">Zamówienie</a> |<a href="change_pass.php">change password</a> | <a href="edit_profile.php">Edit Profile</a> | <a href="manage_users.php">Manage Users</a> | <a href="site_settings.php">Manage Site Settings</a> | <a href="log_off.php?action=logoff">sign out</a></div>
+	<div align="right"><a href="index.php">Home</a> |<a href="../add_user_register.php">Dodaj użytkownika</a> | <a href="../users/order.php">Zamówienie</a> |<a href="change_pass.php">change password</a> | <a href="edit_profile.php">Edit Profile</a> | <a href="manage_users.php">Manage Users</a> | <a href="site_settings.php">Manage Site Settings</a> | <a href="log_off.php?action=logoff">sign out</a></div>
 	<p>Welcome <?php if(empty($getuser[0]['first_name']) || empty($getuser[0]['last_name'])){echo $getuser[0]['username'];} else {echo $getuser[0]['first_name']." ".$getuser[0]['last_name'];} ?></p>
 </body>
 </html>

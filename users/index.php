@@ -71,8 +71,6 @@ $getuser = getUserRecords($_SESSION['user_id']);
 						<li><a href="change_pass.php" >Zmień Hasło</a></li>
 						<li><a href="edit_profile.php" >Edytuj Profil</a></li>
 						<li><a href="log_off.php?action=logoff" >Wyloguj się</a></li>
-						
-						
 					</ul>
 				</div>
 				<!-- /.navbar-collapse -->
@@ -93,7 +91,7 @@ $getuser = getUserRecords($_SESSION['user_id']);
 						<a href="index.php" class="list-group-item active">Home</a>
 						<a href="order.php" class="list-group-item">Zamówienie</a>
 						<a href="order_list.php" class="list-group-item">Lista zamówień</a>
-						<li><a href="files.php" class="list-group-item">Lista Plików</a></li>
+						<a href="files.php" class="list-group-item">Lista Plików</a>
 						<a href="change_pass.php" class="list-group-item">Zmień Hasło</a>
 						<a href="edit_profile.php" class="list-group-item">Edytuj Profil</a>
 						<a href="log_off.php?action=logoff" class="list-group-item">Wyloguj się</a>

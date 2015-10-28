@@ -51,6 +51,9 @@ $getuser = getUserRecords($_SESSION['user_id']);
 							<a href="index.php">Strona Główna</a>
 						</li>
 						<li>
+							<a href="../add_user_register.php" >Dodaj Użytkownika</a>
+						</li>
+						<li>
 							<a href="order.php" >Zamówienie</a>
 						</li>
 						<!-- <?
@@ -78,13 +81,10 @@ $getuser = getUserRecords($_SESSION['user_id']);
 			</div>
 			<!-- /.container -->
 		</nav>
-
 		<!-- Page Content -->
 		<div class="container">
-
-			<div class="row">
-
-				<div class="col-md-3">
+			<div class="row" style="margin-left: -55px !important;">
+				<!-- <div class="col-md-3">
 					<p class="lead">
 						HCS
 					</p>
@@ -93,54 +93,30 @@ $getuser = getUserRecords($_SESSION['user_id']);
 
 						
 						<a href="order.php" class="list-group-item">Zamówienie</a>
-						<!-- <?
-						if (!empty($getuser[0]['thumb_path'])) {echo "<a href='manage_photo.php' class='list-group-item' >Manage My Photo</a>  ";
-						} else {echo "<a href='upload_photo.php' class='list-group-item'>Upload Photo</a>  ";
-						}
-						?> -->
+						
 						<a href="change_pass.php" class="list-group-item">Zmień Hasło</a>
 						<a href="edit_profile.php" class="list-group-item">Edytuj profil</a>
 						<a href="log_off.php?action=logoff" class="list-group-item">Wyloguj się</a>
 
 					</div>
-				</div>
+				</div> -->
 				<div class="" style="float:left; width:100%;">
 
-					<div class="thumbnail">
+					<div class="thumbnail" style="border: none !important;">
 
 						<div class="" style="min-height: 600px;">
-
-							
+							<center>
+							<h3>System pokazuje ostatnie 15 zamówień</h3>
+							</center>
 						<?php
 						
 						if ($getuser[0]['username'] == 'user1' || $getuser[0]['username'] == 'hcs'){
 						
-						$localhost = 'localhost';
-							//name of server. Usually localhost
-							$db_host = 'c22ordersystem';
-							//database name.
-							$db_user = 'c22admin_user';
-							//database username.
-							$db_pwd = '2edebqcRHFFD_';
-							//database password.
-							$table = 'zamownienie';
-						$connect = mysql_connect("$localhost", "$username", "$password") OR die(mysql_error());
-							
-							if (!mysql_connect($db_host, $db_user, $db_pwd))
-								    die("Can't connect to database");
-								
-								if (!mysql_select_db($database))
-								    die("Can't select database");
-								
-								// sending query
-								$result = mysql_query("SELECT * FROM {$table}");
+								$result = mysql_query("SELECT * FROM zamownienie ORDER BY id DESC LIMIT 15  ");
 								if (!$result) {
 								    die("Query to show fields from table failed");
 								}
-								
 								$fields_num = mysql_num_fields($result);
-								
-								
 								echo "<table border='1' style='width:80%; height:80%; font-size:90%; margin: 10px auto;'><tr>";
 								// printing table headers
 								for($i=0; $i<$fields_num; $i++)
@@ -154,18 +130,12 @@ $getuser = getUserRecords($_SESSION['user_id']);
 								while($row = mysql_fetch_row($result))
 								{
 								    echo "<tr>";
-								
-								 
 								    foreach($row as $cell)
 								        echo "<td>$cell</td>";
 										
 								    echo "</tr>";
-
 								}
 								mysql_free_result($result);
-							
-							
-							
 							}else{
 								echo'Nie masz dostępu do zakładki';
 							}
